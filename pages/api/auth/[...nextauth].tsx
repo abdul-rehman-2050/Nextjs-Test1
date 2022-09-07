@@ -1,8 +1,14 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import prisma from '../../../prisma';
+
 
 export default NextAuth({
-    
+    adapter: PrismaAdapter(prisma),
+    session:{
+        strategy: 'jwt'
+    },
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. "Sign in with...")
@@ -16,6 +22,16 @@ export default NextAuth({
               password: {  label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
+             /*  const user2 = await prisma.user.findUnique({
+                  where: { name: credentials?.username },
+                });
+                console.log(user2);
+                if (user2) {
+                  return user2;
+                } else {
+                  return null;
+                }
+                */
               // Add logic here to look up the user from the credentials supplied
               const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
               if(credentials?.username=="test@gmail.com" && credentials?.password=="hello123"){
@@ -30,5 +46,6 @@ export default NextAuth({
     session({ session, token, user }) {
       return session // The return type will match the one returned in `useSession()`
     },
+  
   },
 })
