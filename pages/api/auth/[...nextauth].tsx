@@ -21,31 +21,43 @@ export default NextAuth({
               username: { label: "Username", type: "text", placeholder: "jsmith" },
               password: {  label: "Password", type: "password" }
             },
+            
             async authorize(credentials, req) {
-             /*  const user2 = await prisma.user.findUnique({
-                  where: { name: credentials?.username },
-                });
-                console.log(user2);
-                if (user2) {
-                  return user2;
+                console.log(credentials)
+
+               const mUser =  await prisma.User.findUnique({
+
+                    where: {
+                      email: credentials?.username
+                    },
+                
+                  });
+
+               
+                
+                if (mUser) {
+                  return mUser;
                 } else {
                   return null;
                 }
-                */
-              // Add logic here to look up the user from the credentials supplied
+             
+             /*
               const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
               if(credentials?.username=="test@gmail.com" && credentials?.password=="hello123"){
                 return user
               }else{
                 return null;
-              }
+              }   */
             }
           })
   ],
+  theme: {
+    colorScheme: "light",
+  },
   callbacks: {
-    session({ session, token, user }) {
-      return session // The return type will match the one returned in `useSession()`
+    async jwt({ token }) {
+      token.userRole = "admin"
+      return token
     },
-  
   },
 })
