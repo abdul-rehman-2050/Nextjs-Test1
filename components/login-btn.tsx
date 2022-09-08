@@ -1,5 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 import Button from '@mui/material/Button';
+import Link from 'next/link'
 
 export default function LoginButton() {
   const { data: session } = useSession()
@@ -8,6 +9,7 @@ export default function LoginButton() {
       <>
         Signed in as {session?.user?.email} 
         <Button color="inherit" onClick={() => signOut()}>Logout</Button>
+        <Link color="inherit" href="/userlist">Users</Link>
        
       </>
     )

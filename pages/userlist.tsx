@@ -2,7 +2,6 @@
 import prisma from '../prisma';
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import Router from 'next/router';
 import { InferGetServerSidePropsType } from 'next'
 
 export const getServerSideProps = async ({ }) => {
