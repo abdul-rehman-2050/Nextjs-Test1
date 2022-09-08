@@ -47,6 +47,8 @@ create a new branch
 ```bash 
 git checkout new_branch_name #this could also use for switching branches
 git branch # this command will show all branches
+#if you mess up something and want your clean remote copy of the branch 
+git fetch --all && git reset --hard origin/master
 ```
 
 revert a commit, if you want your files to remain untouch just ``` git reset ``` 
