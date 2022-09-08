@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Layout from "../components/Layout";
-import { useSession, signIn, signOut } from "next-auth/react"
+
 
 const Home: NextPage = () => {
-  const { data: session } = useSession()
+  
   return (
     <Layout>
       <h1>NextAuth.js Example</h1>
