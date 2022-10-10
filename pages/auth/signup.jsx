@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Layout from '../../components/Layout';
+import { PrismaClient } from '@prisma/client'
 
 function Copyright(props) {
   return (
@@ -30,13 +31,22 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+  const prisma = new PrismaClient()
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
+    if(data.email && data.password) {
+      await prisma.user.create({
+        data: {
+          email: data.get('email'),
+          password: data.get('password'),
+        },
+      })
+    }
+
   };
 
   return (

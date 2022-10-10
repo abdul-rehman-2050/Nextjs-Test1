@@ -5,6 +5,7 @@ https://next-auth.js.org/providers/google
 
 */
 
+/*
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -48,13 +49,7 @@ export default NextAuth({
           return null;
         }
 
-        /*
-              const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
-              if(credentials?.username=="test@gmail.com" && credentials?.password=="hello123"){
-                return user
-              }else{
-                return null;
-              }   */
+        
       },
     }),
     GoogleProvider({
@@ -87,3 +82,11 @@ export default NextAuth({
   },
   debug: true,
 });
+*/
+
+
+import NextAuth from "next-auth";
+
+import { nextAuthOptions } from "../../../src/common/auth";
+
+export default NextAuth(nextAuthOptions);
