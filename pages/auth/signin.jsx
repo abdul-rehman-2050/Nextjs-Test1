@@ -12,8 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props: any) {
+import Layout from '../../components/Layout';
+import { getProviders, signIn } from "next-auth/react"
+function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -28,8 +29,8 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export default function SignIn({ providers }) {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -39,6 +40,7 @@ export default function SignIn() {
   };
 
   return (
+    <Layout>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -103,9 +105,34 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
+        <Box>
+        <>
+      {Object.values(providers).map((provider) => (
+        <div key={provider.name}>
+          <Button 
+           fullWidth
+           variant="contained"
+           sx={{ mt: 1, mb: 1 }}
+          
+          onClick={() => signIn(provider.id)}>
+            Sign in with {provider.name}
+          </Button>
+        </div>
+      ))}
+    </>
+            </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
       </ThemeProvider>
+      </Layout>
     
   );
+
+}
+
+export async function getServerSideProps(context) {
+    const providers = await getProviders()
+    return {
+      props: { providers },
+    }
 }

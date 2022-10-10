@@ -73,6 +73,9 @@ export default NextAuth({
   theme: {
     colorScheme: "dark",
   },
+  pages: {
+    signIn: "/auth/signin",
+  },
   callbacks: {
     session({ session, token, user }) {
       return session // The return type will match the one returned in `useSession()`
